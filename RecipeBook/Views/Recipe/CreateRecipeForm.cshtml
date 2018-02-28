@@ -1,0 +1,21 @@
+@{
+  Layout = "_Layout";
+}
+
+<h1>Add a recipe</h1>
+<form method="post" action="/recipe">
+  <div class="form-group">
+    <label for="recipe-name">Enter A Recipe Name</label>
+    <input type="text" name="recipe-name" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="recipe-Ingridient">Enter The Ingridents for this Recipe</label>
+    <textarea rows="4" cols="50" type="text" name="recipe-Ingridient" class="form-control"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="recipe-instruction">Enter Instructions for the Recipe</label>
+    <textarea rows="4" cols="50" type="text" name="recipe-instruction" class="form-control"></textarea>
+  </div>
+  <button type="submit" class="btn-primary">Add Recipe</button>
+</form>
+<a href="/recipe">Return Home</a>

@@ -1,0 +1,22 @@
+@{
+  Layout = "_Layout";
+}
+<h1>Recipes</h1>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Contents</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var recipe in Model)
+    {
+      <tr>
+        <td><a href="/recipe/@recipe.GetId()">@recipe.GetName()</a></td>
+      </tr>
+    }
+  </tbody>
+</table>
+<a href="/recipe/new">Add New Recipe</a>
+<a href="/">Return to Home</a>
