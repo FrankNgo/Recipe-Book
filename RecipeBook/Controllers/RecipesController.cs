@@ -12,11 +12,13 @@ namespace RecipeBook.Controllers
       List<Recipe> allRecipe = Recipe.GetAll();
       return View("Index", allRecipe);
     }
+
     [HttpGet("/recipe/new")]
     public ActionResult CreateRecipeForm()
     {
       return View("CreateRecipeForm");
     }
+
     [HttpPost("/recipe")]
     public ActionResult CreateRecipe()
     {
@@ -25,5 +27,21 @@ namespace RecipeBook.Controllers
 
       return RedirectToAction("Index", "recipe");
     }
+
+    [HttpGet("/recipe/{id}")]
+    public ActionResult Details(int id)
+    {
+      Recipe foundRecipe = Recipe.Find(id);
+      return View();
+    }
+
+    [HttpGet("/recipe/{id}/delete")]
+    public ActionResult Delete(int id)
+    {
+      Recipe foundRecipe = Recipe.Find(id);
+      foundRecipe.Delete();
+      return RedirectToAction("Index","recipe");
+    }
+
   }
 }

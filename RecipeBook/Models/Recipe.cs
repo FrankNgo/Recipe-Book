@@ -44,6 +44,28 @@ namespace RecipeBook.Models
       }
     }
 
+    public void Delete()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"DELETE FROM recipe WHERE id = @RecipeId;";
+      //DELETE FROM roster WHERE student_id = @StudentId;";
+      MySqlParameter recipeIdParameter = new MySqlParameter();
+      recipeIdParameter.ParameterName = "@RecipeId";
+      recipeIdParameter.Value = this._id;
+
+      cmd.Parameters.Add(recipeIdParameter);
+      cmd.ExecuteNonQuery();
+
+      conn.Close();
+      if(conn != null)
+      {
+        conn.Dispose();
+      }
+    }
+
     public void Save()
     {
       MySqlConnection conn = DB.Connection();
@@ -117,6 +139,41 @@ namespace RecipeBook.Models
         bool idEquality = (this.GetId() == newRecipe.GetId());
         return (NameEquality && ingredientEquality && instructionEquality && idEquality);
       }
+    }
+    public static Recipe Find(int id)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * from `recipe` WHERE id = @thisId;";
+
+      MySqlParameter thisId = new MySqlParameter();
+      thisId.ParameterName = "@thisId";
+      thisId.Value = id;
+      cmd.Parameters.Add(thisId);
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      int recipeId = 0;
+      string recipeName = "";
+      string recipeIngridient = "";
+      string recipeInstruction = "";
+
+      while (rdr.Read())
+     {
+       recipeId = rdr.GetInt32(3);
+       recipeName = rdr.GetString(0);
+       recipeIngridient = rdr.GetString(1);
+       recipeInstruction = rdr.GetString(2);
+     }
+       Recipe foundRecipe = new Recipe(recipeName, recipeIngridient, recipeInstruction, recipeId);
+       conn.Close();
+
+    if (conn != null)
+    {
+      conn.Dispose();
+    }
+    return foundRecipe;
     }
   }
 }
