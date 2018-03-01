@@ -9,12 +9,12 @@ This is an app that allows users to keep track of recipes. Users can add recipes
 ## Specifications
 
 - User is able to add a recipe with ingredients and instructions
- - Example Input: Name - Pasta
-                : Ingredients - Pasta, Water, Salt
-                : instructions - Put pasta in pot
- - Example Output: Recipe is added to list
+  - Example Input: Name - Pasta
+            - Ingredients - Pasta, Water, Salt
+            - instructions - Put pasta in pot
+  - Example Output: Recipe is added to list
 
- 
+
 
 
 ### Installing
