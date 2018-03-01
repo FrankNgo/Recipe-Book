@@ -34,6 +34,34 @@ namespace RecipeBook.Models
         conn.Dispose();
       }
     }
+
+    public void DropRecipe(Recipe droppedRecipe)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"DELETE FROM recipe_tag WHERE recipe_id = @RecipeId AND tag_id = @TagId;";
+
+      MySqlParameter recipeIdParameter = new MySqlParameter();
+      recipeIdParameter.ParameterName = "@RecipeId";
+      recipeIdParameter.Value = droppedRecipe.GetId();
+
+      MySqlParameter tagIdParameter = new MySqlParameter();
+      tagIdParameter.ParameterName = "@TagId";
+      tagIdParameter.Value = this._tagId;
+
+      cmd.Parameters.Add(recipeIdParameter);
+      cmd.Parameters.Add(tagIdParameter);
+      cmd.ExecuteNonQuery();
+
+      conn.Close();
+      if(conn != null)
+      {
+        conn.Dispose();
+      }
+    }
+
     public void Save()
     {
       MySqlConnection conn = DB.Connection();
@@ -129,7 +157,7 @@ namespace RecipeBook.Models
     }
 
 
-    public List<Tag> GetRecipes()
+    public List<Recipe> GetRecipes()
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
@@ -141,7 +169,7 @@ namespace RecipeBook.Models
 
       MySqlParameter tagIdParameter = new MySqlParameter();
       tagIdParameter.ParameterName = "@TagId";
-      tagIdParameter.Value = _courseId;
+      tagIdParameter.Value = _tagId;
       cmd.Parameters.Add(tagIdParameter);
 
       MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
@@ -162,9 +190,32 @@ namespace RecipeBook.Models
       {
         conn.Dispose();
       }
-
       return recipes;
+    }
 
+    public void AddRecipe(Recipe newRecipe)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"INSERT INTO recipe_tag (tag_id, recipe_id) VALUES (@TagId, @RecipeId);";
+
+      MySqlParameter tag_id = new MySqlParameter();
+      tag_id.ParameterName = "@TagId";
+      tag_id.Value = this._tagId;
+      cmd.Parameters.Add(tag_id);
+
+      MySqlParameter recipe_id = new MySqlParameter();
+      recipe_id.ParameterName = "@RecipeId";
+      recipe_id.Value = newRecipe.GetId();
+      cmd.Parameters.Add(recipe_id);
+
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
     }
   }
 }

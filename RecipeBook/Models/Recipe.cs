@@ -50,8 +50,7 @@ namespace RecipeBook.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"DELETE FROM recipe WHERE id = @RecipeId;";
-      //DELETE FROM roster WHERE student_id = @StudentId;";
+      cmd.CommandText = @"DELETE FROM recipe WHERE id = @RecipeId; DELETE FROM recipe_tag WHERE recipe_id = @RecipeId;";
       MySqlParameter recipeIdParameter = new MySqlParameter();
       recipeIdParameter.ParameterName = "@RecipeId";
       recipeIdParameter.Value = this._id;

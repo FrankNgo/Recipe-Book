@@ -1,0 +1,40 @@
+@{
+  Layout = "_Layout";
+}
+
+<h1>Details for @Model["tag"].GetTagName()</h1>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Recipe Name</th>
+      <th>Recipe Info</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach(var recipe in @Model["recipes"])
+    {
+      <tr>
+        <td>@recipe.GetName()</td>
+        <td>Placeholder</td>
+        <td><a href='/tag/@Model["tag"].GetTagId()/recipe/@recipe.GetId()'><span class="glyphicon glyphicon-remove"></span></a>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<h2>Add a recipe to this tag</h2>
+<form method="post" action='/tag/@Model["tag"].GetTagId()/recipe'>
+  <div class="form-group">
+    <label for="recipe-id">Select a recipe</label>
+    <select id="recipe-id" name="recipe-id" type="text">
+      @foreach (var recipe in @Model["allrecipes"])
+      {
+        <option value="@recipe.GetId()">@recipe.GetName()</option>
+      }
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">Add</button>
+</form>
+<a href="/tag">Return to tags</a>
