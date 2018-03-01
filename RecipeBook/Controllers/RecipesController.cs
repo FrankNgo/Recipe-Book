@@ -32,7 +32,7 @@ namespace RecipeBook.Controllers
     public ActionResult Details(int id)
     {
       Recipe foundRecipe = Recipe.Find(id);
-      return View();
+      return View(foundRecipe);
     }
 
     [HttpGet("/recipe/{id}/delete")]
