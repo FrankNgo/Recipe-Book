@@ -1,0 +1,25 @@
+@{
+  Layout = "_Layout";
+}
+<h1>Tags</h1>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Tag Name</th>
+      <th>recipes</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach(var tag in Model)
+    {
+      <tr>
+        <td>@tag.GetTagName()</td>
+        <td><a href="/tag/@tag.GetTagId()"><span class="glyphicon glyphicon-list-alt"></span></a></td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<a href="/tag/new">Add new Tag</a>
+<a href="/">Return to Home</a>
